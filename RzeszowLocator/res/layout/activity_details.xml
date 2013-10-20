@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="180dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:background="#FFAA8866"
+        android:contentDescription="@string/img"
+        android:scaleType="centerCrop"
+        android:src="@android:drawable/sym_def_app_icon" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:textSize="25sp" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:minHeight="130dip" >
+
+        <TextView
+            android:id="@+id/tvDescr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:textSize="16sp" />
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnShowOnMap"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="8dp"
+        android:text="@string/showMap"
+        android:textSize="22sp" />
+
+</LinearLayout>

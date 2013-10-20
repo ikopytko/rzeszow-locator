@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">RzeszowLocator</string>
+    <string name="action_settings">Settings</string>
+    <string name="img">image</string>
+    <string name="showMap">Show me on the map!</string>
+    <string name="menuMore">More</string>
+    <string name="menuAll">Show all on the map</string>
+    <string name="menuUpd">Update</string>
+    <string name="menuExit">Exit</string>
+
+</resources>
