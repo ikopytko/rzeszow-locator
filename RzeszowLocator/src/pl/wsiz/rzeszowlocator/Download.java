@@ -24,6 +24,9 @@ import org.json.JSONObject;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -52,6 +55,7 @@ class Download extends AsyncTask<Void, Integer, Void> {
 		pb.setIndeterminate(false);
 		pb.setVisibility(View.VISIBLE);
 		tv.setVisibility(View.VISIBLE);
+		tv.setText("Downloaded 0 items from %");
 		
 		getNetworkState();
 		
@@ -196,6 +200,21 @@ class Download extends AsyncTask<Void, Integer, Void> {
             fos.write(baf.toByteArray());
             fos.flush();
             fos.close();
+            
+            
+            // Create small bitmap for listView
+            
+            BitmapFactory.Options options=new BitmapFactory.Options();
+            options.inSampleSize=2; //try to decrease decoded image 
+
+            Bitmap baseBitmap = BitmapFactory.decodeFile(ActivityMain.locations + picName, options);
+            Bitmap resized = Bitmap.createScaledBitmap(baseBitmap, 120, 120, true);
+            
+            File fileT = new File(ActivityMain.locations, "_"+picName);
+            fileT.createNewFile();
+            FileOutputStream ostream = new FileOutputStream(fileT);
+            resized.compress(CompressFormat.PNG, 65, ostream);
+            ostream.close(); 
         }
         catch (Exception e)
         {

@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,12 +19,13 @@ import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class ActivityMap extends SherlockFragmentActivity {
+public class ActivityMap extends SherlockFragmentActivity implements OnMapClickListener, OnClickListener{
 	
 	class MyInfoWindowAdapter implements InfoWindowAdapter{
 
@@ -52,8 +55,11 @@ public class ActivityMap extends SherlockFragmentActivity {
 		}
 	}
 	
-	GoogleMap mMap;
-	String name = "";
+	private GoogleMap mMap;
+	private String name = "";
+	private Button btnRet;
+	private Marker newMarker;
+	private LatLng RZESZOW = new LatLng(50.03729805668018, 22.004703283309937);
 
 	@Override
 	public void onCreate(Bundle savedInstanceData) {
@@ -68,10 +74,39 @@ public class ActivityMap extends SherlockFragmentActivity {
 		mMap = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
 		
+		if (!intent.getBooleanExtra("serv", false)) {
+			mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
+			addMarkers();
+		} else {
+			btnRet = (Button) findViewById(R.id.btnRetCoords);
+			btnRet.setOnClickListener(this);
+			btnRet.setVisibility(View.VISIBLE);
+			
+			mMap.setOnMapClickListener(this);
+			btnRet = (Button) findViewById(R.id.btnRetCoords);
+			newMarker = mMap.addMarker(new MarkerOptions().position(RZESZOW));
+			mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(RZESZOW, 13));
+		}
 		//mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-		mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
-
-		addMarkers();
+	}
+	
+	 @Override
+	public void onMapClick(LatLng arg0) {
+		 /*
+		 Marker newMarker = mMap.addMarker(new MarkerOptions()
+	        .position(arg0));*/
+		 newMarker.setPosition(arg0);
+	  /*
+		 newMarker.setTitle(newMarker.getId());*/
+	}
+	 
+	@Override
+	public void onClick(View v) {
+		Intent intent = new Intent();
+		intent.putExtra("lat", newMarker.getPosition().latitude);
+		intent.putExtra("lon", newMarker.getPosition().longitude);
+		setResult(RESULT_OK, intent);
+		finish();
 	}
 	
 	void addMarkers() {
@@ -101,7 +136,7 @@ public class ActivityMap extends SherlockFragmentActivity {
 			do {
 				RZESZOW = new LatLng(Double.parseDouble(c.getString(c.getColumnIndex("lat"))),
 						Double.parseDouble(c.getString(c.getColumnIndex("lon"))));
-				mMap.addMarker(new MarkerOptions().position(RZESZOW).snippet(ActivityMain.locations + c.getString(c.getColumnIndex("img")))).
+				mMap.addMarker(new MarkerOptions().position(RZESZOW).snippet(ActivityMain.locations + "_" + c.getString(c.getColumnIndex("img")))).
 					setTitle(c.getString(c.getColumnIndex("name")));
 			} while (c.moveToNext());
 			

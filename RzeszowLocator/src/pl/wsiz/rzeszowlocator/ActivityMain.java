@@ -93,6 +93,10 @@ public class ActivityMain extends SherlockActivity {
 			sc.execute();
 			break;
 			
+		case R.id.menuAdd:
+			startActivity(new Intent(this, ActivityAdd.class));
+			break;
+			
 		case R.id.menuShowAll:
 			startActivity(new Intent(this, ActivityMap.class));
 			break;
@@ -127,11 +131,15 @@ public class ActivityMain extends SherlockActivity {
 			do {
 				hm = new HashMap<String, Object>();
 				hm.put("name", c.getString(c.getColumnIndex("name")));
-				hm.put("desc", c.getString(c.getColumnIndex("description")).substring(0, 25)+"...");
+				
+				String descr = c.getString(c.getColumnIndex("description"));
+				if (descr.length() > 25)
+					descr = descr.substring(0, 25)+"...";
+				hm.put("desc", descr);
 				
 				File imgFile = new  File(locations + c.getString(c.getColumnIndex("img")));
 				if(imgFile.exists()){
-					hm.put("img", locations + c.getString(c.getColumnIndex("img")));
+					hm.put("img", locations + "_" + c.getString(c.getColumnIndex("img")));
 				} else {
 					hm.put("img", R.drawable.ic_launcher);
 				}

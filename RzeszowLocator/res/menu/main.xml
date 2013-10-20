@@ -13,6 +13,10 @@
                 android:icon="@android:drawable/ic_menu_mapmode"
                 android:title="@string/menuAll"/>
             <item
+                android:id="@+id/menuAdd"
+                android:icon="@android:drawable/ic_input_add"
+                android:title="@string/menuAdd"/>
+            <item
                 android:id="@+id/menuUpd"
                 android:icon="@drawable/abs__ic_search_api_holo_light"
                 android:title="@string/menuUpd"/>

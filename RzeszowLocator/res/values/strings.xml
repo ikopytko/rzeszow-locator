@@ -8,6 +8,18 @@
     <string name="menuMore">More</string>
     <string name="menuAll">Show all on the map</string>
     <string name="menuUpd">Update</string>
+    <string name="menuAdd">Add</string>
     <string name="menuExit">Exit</string>
+    
+    <string name="addNew">Add new place</string>
+    <string name="addCoord">Pick coordinates from the map</string>
+    <string name="addOk">OK</string>
+    <string name="addTitle">Type title</string>
+    <string name="addDesc">Type description</string>
+    <string name="addWarn">Only latin letters</string>
+    <string name="addPhoto">Take a photo</string>
+    
+    <string name="mapPick">Pick selected</string>
+    <string name="photo">Get picture</string>
 
 </resources>
